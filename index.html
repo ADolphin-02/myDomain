@@ -139,8 +139,21 @@ width: 672px;
 	</style>
 	<script src="jquery.min.js"></script>
 	<script>
+
+    var sUserAgent = navigator.userAgent.toLowerCase();
+	var isPhone = true;
+    if (/ipad|iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/.test(sUserAgent)) {
+        isPhone = true;
+    } else {
+	isPhone = false;
+	}
+
 	$(function(){ 
+	
 		$(".key-box li").mousedown(function(){ 
+			if(isPhone){
+				return
+			}
 			var n = $(this).index();
 			play(n)
 		//	$("audio").stop().get(n).play();
@@ -148,13 +161,27 @@ width: 672px;
 			//.siblings().css("box-shadow","10px 10px 20px black");
 			//$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
 		})
-$(".key-box li").mouseup(function(){ 
+			$(".key-box li").mouseup(function(){ 
+			if(isPhone){
+				return
+			}
 			var n = $(this).index();
 			stop(n)
-		//	$("audio").stop().get(n).play();
-			//$(this).css("box-shadow","none")
-			//.siblings().css("box-shadow","10px 10px 20px black");
-			//$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
+		})	
+		
+		$(".key-box li").touchstart(function(){ 
+			if(!isPhone){
+				return
+			}
+			var n = $(this).index();
+			stop(n)
+		})	
+		$(".key-box li").touchmove(function(){ 
+			if(!isPhone){
+				return
+			}
+			var n = $(this).index();
+			stop(n)
 		})
 		function play(index){ 
 			$("audio").get(index).play();
