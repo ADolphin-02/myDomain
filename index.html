@@ -168,21 +168,24 @@ width: 672px;
 			var n = $(this).index();
 			stop(n)
 		})	
+		    $(".key-box li").on('touchstart',function(e) {
+       if(!isPhone){
+				return
+			}
+			var n = $(this).index();
+			play(n)
+
+    }) 
+	$(".key-box li").on('touchmove',function(e) {
+       if(!isPhone){
+				return
+			}
+			var n = $(this).index();
+			stop(n)
+
+    })
+
 		
-		$(".key-box li").touchstart(function(){ 
-			if(!isPhone){
-				return
-			}
-			var n = $(this).index();
-			stop(n)
-		})	
-		$(".key-box li").touchmove(function(){ 
-			if(!isPhone){
-				return
-			}
-			var n = $(this).index();
-			stop(n)
-		})
 		function play(index){ 
 			$("audio").get(index).play();
 			$(".key-box li").eq(index).css("box-shadow","none");
