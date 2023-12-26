@@ -139,12 +139,21 @@ width: 672px;
 	<script src="jquery.min.js"></script>
 	<script>
 	$(function(){ 
-		$(".key-box li").click(function(){ 
+		$(".key-box li").mousedown(function(){ 
 			var n = $(this).index();
-			$("audio").stop().get(n).play();
-			$(this).css("box-shadow","none")
-			.siblings().css("box-shadow","10px 10px 20px black");
-			$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
+			play(n)
+		//	$("audio").stop().get(n).play();
+			//$(this).css("box-shadow","none")
+			//.siblings().css("box-shadow","10px 10px 20px black");
+			//$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
+		})
+$(".key-box li").mouseup(function(){ 
+			var n = $(this).index();
+			stop(n)
+		//	$("audio").stop().get(n).play();
+			//$(this).css("box-shadow","none")
+			//.siblings().css("box-shadow","10px 10px 20px black");
+			//$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
 		})
 		function play(index){ 
 			$("audio").get(index).play();
@@ -156,6 +165,8 @@ width: 672px;
 			$("audio").get(index).pause();
 			$("audio").get(index).load();
 		}
+		
+
 		//设置键盘控制
 		$(document).keydown(function(event){ 
 			console.log(event.keyCode);
