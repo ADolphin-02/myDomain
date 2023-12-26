@@ -1,0 +1,215 @@
+<html><head><title>球牌钢琴(天黑)</title>
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.5, user-scalable=0">
+	</head><body style=""><object id="closes" type="application/x-oleobject" classid="clsid:adb880a6-d8ff-11cf-9377-00aa003b7a11">
+
+	<param name="Command" value="Close">
+
+	</object>
+	 <h1 class="title">花门永存</h1>
+	<ul class="key-box">
+	
+		<li style="box-shadow: black 10px 10px 20px;">do
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">re
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">mi
+			
+		</li>
+		<li style="box-shadow: none;">fa
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">sol
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">
+			la
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">si
+			<span></span>
+		</li>
+		<li style="box-shadow: black 10px 10px 20px;">do</li>
+	</ul>
+	<ul class="music-box">
+		<li class=""><img src="img/do.png"></li>
+		<li class=""><img src="img/re.png"></li>
+		<li><img src="img/mi.png"></li>
+		<li class="active"><img src="img/fa.png"></li>
+		<li><img src="img/sol.png"></li>
+		<li><img src="img/la.png"></li>
+		<li><img src="img/si.png"></li>
+	</ul>
+	<audio src="mp3/1do.mp3"></audio>
+	<audio src="mp3/2re.mp3"></audio>
+	<audio src="mp3/3mi.mp3"></audio>
+	<audio src="mp3/4fa.mp3"></audio>
+	<audio src="mp3/5so.mp3"></audio>
+	<audio src="mp3/6la.mp3"></audio>
+	<audio src="mp3/7si.mp3"></audio>
+	<audio src="mp3/8do.mp3"></audio>
+	<style>
+	*{ 
+		padding: 0;
+		margin: 0;
+	}
+	li{ 
+		list-style: none;
+	}
+	html{ 
+		width: 100%;
+		height: 100%;
+	}
+	body{ 
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+
+		background-size: 100% 100%;
+	}
+
+	
+	
+.title {
+width: 672px;
+		margin: 50px auto;
+
+  opacity: 0; /* 初始状态为透明 */
+  animation: fade-in 1s ease-in-out forwards; /* 使用动画效果逐渐显示 */
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; /* 开始时完全透明 */
+  }
+  100% {
+    opacity: 1; /* 结束时完全不透明 */
+  }
+}
+	.key-box{ 
+		width: 672px;
+		margin: 50px auto;
+	}
+	.key-box li{ 
+		position: relative;
+		float: left;
+		width: 80px;
+		height: 300px;
+		border:2px solid black ;
+		background: white;
+		text-align: center;
+		box-shadow: 10px 10px 20px black;
+	}
+	.key-box li span{ 
+		position: absolute;
+		right: -20px;
+		background: #000;
+		height: 150px;
+		width: 40px;
+		border-radius: 2px ;
+		z-index: 1;
+	}
+	.music-box{ 
+		width: 1200px;
+		height: 600px;
+		margin-left: -600px;
+		left: 50%;
+		position: absolute;
+		z-index: -1;
+		overflow: hidden;
+	}
+	.music-box li{ 
+		position: relative;
+		float: left;
+		margin-left: 50px;
+		top: 600px;
+	}
+	.music-box li img { 
+		width: 120px;
+	}
+	.music-box li.active{ 
+		top: 0;
+		opacity: 0.1;
+		transition: all 3s;
+	}
+	</style>
+	<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+	<script>
+	$(function(){ 
+		$(".key-box li").click(function(){ 
+			var n = $(this).index();
+			$("audio").stop().get(n).play();
+			$(this).css("box-shadow","none")
+			.siblings().css("box-shadow","10px 10px 20px black");
+			$(".music-box li").eq(n).addClass("active").siblings().removeClass("active");
+		})
+		function play(index){ 
+			$("audio").get(index).play();
+			$(".key-box li").eq(index).css("box-shadow","none");
+			$(".key-box li").eq(index).siblings().css("box-shadow","10px 10px 20px black");
+			$(".music-box li").eq(index).addClass("active").siblings().removeClass("active");
+		}
+		function stop(index){ 
+			$("audio").get(index).pause();
+			$("audio").get(index).load();
+		}
+		//设置键盘控制
+		$(document).keydown(function(event){ 
+			console.log(event.keyCode);
+			if(event.keyCode == 97){ 
+				play(0);
+			}
+			if(event.keyCode == 98){ 
+				play(1);
+			}
+			if(event.keyCode == 99){ 
+				play(2);
+			}
+			if(event.keyCode == 100){ 
+				play(3);
+			}
+			if(event.keyCode == 101){ 
+				play(4);
+			}
+			if(event.keyCode == 102){ 
+				play(5);
+			}
+			if(event.keyCode == 103){ 
+				play(6);
+			}
+			if(event.keyCode == 104){ 
+				play(7);
+			}
+		})
+		$(document).keyup(function(event){ 
+			console.log(event.keyCode);
+			if(event.keyCode == 97){ 
+				stop(0);
+			}
+			if(event.keyCode == 98){ 
+				stop(1);
+			}
+			if(event.keyCode == 99){ 
+				stop(2);
+			}
+			if(event.keyCode == 100){ 
+				stop(3);
+			}
+			if(event.keyCode == 101){ 
+				stop(4);
+			}
+			if(event.keyCode == 102){ 
+				stop(5);
+			}
+			if(event.keyCode == 103){ 
+				stop(6);
+			}
+			if(event.keyCode == 104){ 
+				stop(7);
+			}
+		})
+	})
+	</script>
+	</body></html>
