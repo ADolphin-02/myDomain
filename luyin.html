@@ -1,0 +1,209 @@
+﻿<html lang="en">
+<head><title>球牌钢琴(天黑)</title>
+<meta charset="text/html;charset=UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=0.5, user-scalable=0">
+	</head><body style="">
+
+	
+	<ul class="key-box">
+	      
+    <button  class="key-box" onclick="recordAudio('1')" id="button1" ">录制按钮do</button>  
+	<audio controls class="audio-player"  id="audio1"></audio>
+	
+	<button  class="key-box" onclick="recordAudio('2')" id="button2">录制按钮re</button> 
+	<audio controls class="audio-player"  id="audio2"></audio>	
+	
+  <button class="key-box" onclick="recordAudio('3')" id="button3">录制按钮mi</button>
+  <audio controls class="audio-player"  id="audio3"></audio>	
+  
+                <button class="key-box" onclick="recordAudio('4')" id="button4">录制按钮fa</button>
+  <audio controls class="audio-player"  id="audio4"></audio>
+                <button class="key-box" onclick="recordAudio('5')" id="button5">录制按钮so</button>
+  <audio controls class="audio-player"  id="audio5"></audio>
+                <button class="key-box" onclick="recordAudio('6')" id="button6">录制按钮la</button>
+  <audio controls class="audio-player"  id="audio6"></audio>
+                <button class="key-box" onclick="recordAudio('7')" id="button7">录制按钮si</button>
+  <audio controls class="audio-player"  id="audio7"></audio>
+                <button class="key-box" onclick="recordAudio('8')" id="button8">录制按钮do</button>
+  <audio controls class="audio-player"  id="audio8"></audio>
+	</ul>
+	<ul class="music-box">
+		<li class=""><img src="img/do.png"></li>
+		<li class=""><img src="img/re.png"></li>
+		<li><img src="img/mi.png"></li>
+		<li class="active"><img src="img/fa.png"></li>
+		<li><img src="img/sol.png"></li>
+		<li><img src="img/la.png"></li>
+		<li><img src="img/si.png"></li>
+	</ul>
+
+	<style>
+	*{ 
+		padding: 0;
+		margin: 0;
+	}
+	li{ 
+		list-style: none;
+	}
+	html{ 
+		width: 100%;
+		height: 100%;
+	}
+	body{ 
+	 scroll-behavior: smooth
+		width: 100%;
+		height: 100%;
+	
+
+		background-size: 100% 100%;
+	}
+
+	
+	
+.title {
+width: 672px;
+		margin: 50px auto;
+
+  opacity: 0; /* 初始状态为透明 */
+  animation: fade-in 1s ease-in-out forwards; /* 使用动画效果逐渐显示 */
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0; /* 开始时完全透明 */
+  }
+  100% {
+    opacity: 1; /* 结束时完全不透明 */
+  }
+}
+	.key-box{ 
+	user-select: none;
+		width: 672px;
+		margin: 50px auto;
+	}
+	.key-box li{ 
+		position: relative;
+		float: left;
+		width: 80px;
+		height: 300px;
+		border:2px solid black ;
+		background: white;
+		text-align: center;
+		box-shadow: 10px 10px 20px black;
+	}
+	.key-box li span{ 
+		position: absolute;
+		right: -20px;
+		background: #000;
+		height: 150px;
+		width: 40px;
+		border-radius: 2px ;
+		z-index: 1;
+	}
+	.music-box{ 
+		width: 1200px;
+		height: 600px;
+		margin-left: -600px;
+		left: 50%;
+		position: absolute;
+		z-index: -1;
+		overflow: hidden;
+	}
+	.music-box li{ 
+		position: relative;
+		float: left;
+		margin-left: 50px;
+		top: 600px;
+	}
+	.music-box li img { 
+		width: 120px;
+	}
+	.music-box li.active{ 
+		top: 0;
+		opacity: 0.1;
+		transition: all 3s;
+	}
+	</style>
+	<script src="jquery.min.js"></script>
+	<script>
+	var mediaRecorder;
+	var chunks = [];
+if (navigator.mediaDevices.getUserMedia) {
+  
+  const constraints = { audio: true };
+  navigator.mediaDevices.getUserMedia(constraints).then(
+    stream => {
+	mediaRecorder = new MediaRecorder(stream);
+      console.log("授权成功！");
+    },
+    () => {
+      console.error("授权失败！");
+    }
+  );
+} else {
+  console.error("浏览器不支持 getUserMedia");
+}
+	  
+        function uploadAudio(blob, name) {
+                var formData = new FormData();
+        formData.append("audioFile", blob, name + ".mp3"); // 将Blob对象添加到FormData中
+
+        $.ajax({
+                url: "http://47.106.118.27:9999/saveMp3", // 替换为Spring Boot后端的上传URL
+                type: "POST",
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+            // 处理上传成功的响应
+            console.log("上传成功");
+        },
+        error: function(xhr, status, error) {
+            // 处理上传失败的情况
+            console.log("上传失败：" + error);
+			}
+			});
+		}
+
+	  
+	  function recordAudio(buttonId) {  
+	     
+
+      //recordBtn.onclick = () => {
+        if (mediaRecorder.state === "recording") {
+          mediaRecorder.stop();
+          document.querySelector("#"+"button"+ buttonId).textContent = "重新录音";
+          document.querySelector("#"+"button"+ buttonId).style.backgroundColor = "#EFEFEF";
+          console.log("录音结束");
+        } else {
+          mediaRecorder.start();
+          console.log("录音中...");
+		  
+          document.querySelector("#" +"button"+ buttonId).textContent = "停止录音";
+          document.querySelector("#" +"button"+ buttonId).style.backgroundColor = "#ed5736";
+          //recordBtn.textContent = "停止录音";
+        }
+        console.log("录音器状态：", mediaRecorder.state);
+     // };
+
+      mediaRecorder.ondataavailable = e => {
+        chunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = e => {
+        var blob = new Blob(chunks, { type: "audio/mp3; codecs=opus" });
+		
+		uploadAudio(blob, buttonId);
+        chunks = [];
+        var audioURL = window.URL.createObjectURL(blob);
+		console.log(buttonId,audioURL);
+		
+        document.querySelector("#" +"audio"+ buttonId).src = audioURL;
+		
+
+      };
+}
+
+  
+	</script>
+	</body></html>
