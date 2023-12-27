@@ -149,7 +149,7 @@ if (navigator.mediaDevices.getUserMedia) {
         formData.append("audioFile", blob, name + ".mp3"); // 将Blob对象添加到FormData中
 
         $.ajax({
-                url: "http://47.106.118.27:9999/saveMp3", // 替换为Spring Boot后端的上传URL
+                url: "https://277m5s1186.goho.co/saveMp3", // 替换为Spring Boot后端的上传URL
                 type: "POST",
                 data: formData,
                 processData: false,
